@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ImmoFR — Immobilier en France</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-logo">Immo<span>FR</span><span class="logo-dot">●</span></div>
+  <ul class="navbar-nav">
+    <li><a href="#" id="nav-accueil" class="active">Accueil</a></li>
+    <li><a href="#" id="nav-add">+ Ajouter</a></li>
+    <li><a href="#" id="nav-contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrapper">
+
+  <!-- VUE : ACCUEIL (recherche + résultats) -->
+  <div id="vue-accueil">
+
+    <!-- 1. RECHERCHE -->
+    <section id="section-search" class="section-block">
+      <h2 class="section-title">Recherche rapide</h2>
+      <form id="form-recherche" novalidate>
+        <div class="search-grid">
+          <div class="form-group">
+            <label for="f-transaction">Transaction</label>
+            <select id="f-transaction">
+              <option value="Tous">Tous</option>
+              <option value="Location">Location</option>
+              <option value="Vente">Vente</option>
+              <option value="Saisonnier">Saisonnier</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-region">Région</label>
+            <select id="f-region">
+              <option value="Toute la France">Toute la France</option>
+              <option value="Auvergne-Rhône-Alpes">Auvergne-Rhône-Alpes</option>
+              <option value="Bretagne">Bretagne</option>
+              <option value="Hauts-de-France">Hauts-de-France</option>
+              <option value="Île-de-France">Île-de-France</option>
+              <option value="Normandie">Normandie</option>
+              <option value="Nouvelle-Aquitaine">Nouvelle-Aquitaine</option>
+              <option value="Occitanie">Occitanie</option>
+              <option value="Provence-Alpes-Côte d'Azur">Provence-Alpes-Côte d'Azur</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-typeBien">Type de bien</label>
+            <select id="f-typeBien">
+              <option value="Tous">Tous</option>
+              <option value="Appartement">Appartement</option>
+              <option value="Studio">Studio</option>
+              <option value="Maison">Maison</option>
+              <option value="Local commercial">Local commercial</option>
+              <option value="Terrain">Terrain</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-prixMin">Prix min (€)</label>
+            <input type="number" id="f-prixMin" placeholder="ex : 500" min="0"/>
+          </div>
+          <div class="form-group">
+            <label for="f-prixMax">Prix max (€)</label>
+            <input type="number" id="f-prixMax" placeholder="ex : 1900" min="0"/>
+          </div>
+          <div class="form-group" style="justify-content:flex-end">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn btn-primary">🔍 Rechercher</button>
+          </div>
+        </div>
+        <label class="checkbox-row">
+          <input type="checkbox" id="f-favoris"/>
+          <span>Afficher uniquement mes favoris</span>
+        </label>
+      </form>
+    </section>
+
+    <!-- 2. RÉSULTATS -->
+    <section id="section-results">
+      <div class="results-header">
+        <h2 class="section-title">Résultats</h2>
+        <div class="sort-row">
+          <label for="select-tri">Trier par :</label>
+          <select id="select-tri">
+            <option value="defaut">Défaut</option>
+            <option value="prix-asc">Prix croissant</option>
+            <option value="prix-desc">Prix décroissant</option>
+            <option value="recent">Plus récent</option>
+            <option value="ancien">Plus ancien</option>
+            <option value="surface-asc">Surface croissante</option>
+          </select>
+          <button class="btn btn-success btn-sm" id="btn-add-annonce">+ Ajouter une annonce</button>
+        </div>
+      </div>
+      <div class="results-meta" id="results-meta">—</div>
+      <div class="annonces-grid" id="annonces-grid"></div>
+      <div class="pagination" id="pagination"></div>
+    </section>
+
+  </div><!-- /vue-accueil -->
+
+  <!-- VUE : DETAIL -->
+  <div id="vue-detail" style="display:none">
+    <div style="margin-bottom:16px">
+      <button class="btn btn-ghost" id="btn-back-detail">← Retour aux résultats</button>
+    </div>
+    <div class="section-block">
+      <div class="detail-layout">
+        <div class="carousel">
+          <div class="carousel-img-wrap">
+            <img id="carousel-img" src="" alt="Photo du bien"/>
+            <div class="carousel-controls">
+              <button class="carousel-btn" id="carousel-prev">‹</button>
+              <button class="carousel-btn" id="carousel-next">›</button>
+            </div>
+          </div>
+          <div class="carousel-dots" id="carousel-dots"></div>
+        </div>
+        <div class="detail-info">
+          <h2 class="detail-title" id="detail-titre">—</h2>
+          <div class="detail-badge-price">
+            <span class="card-badge badge-location" id="detail-transaction">—</span>
+            <span class="detail-price" id="detail-prix">—</span>
+          </div>
+          <div class="detail-location" id="detail-location">—</div>
+          <div class="detail-props">
+            <div class="detail-prop"><div class="prop-label">Type de bien</div><div class="prop-value" id="detail-typebien">—</div></div>
+            <div class="detail-prop"><div class="prop-label">Surface</div><div class="prop-value" id="detail-surface">—</div></div>
+            <div class="detail-prop"><div class="prop-label">Pièces</div><div class="prop-value" id="detail-pieces">—</div></div>
+            <div class="detail-prop"><div class="prop-label">Adresse</div><div class="prop-value" id="detail-adresse">—</div></div>
+          </div>
+          <div class="detail-description" id="detail-description">—</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /vue-detail -->
+
+  <!-- VUE : FORMULAIRE -->
+  <div id="vue-form" style="display:none">
+    <div class="section-block">
+      <h2 class="section-title" id="form-annonce-title">Ajouter une annonce</h2>
+      <form id="form-annonce" novalidate>
+        <p class="form-section-title">Informations générales</p>
+        <div class="form-group">
+          <label for="a-titre">Titre <span style="color:var(--accent2)">*</span></label>
+          <input type="text" id="a-titre" placeholder="ex : Appartement T2 à louer à Paris"/>
+          <span class="field-error" id="a-titre-error"></span>
+        </div>
+        <div class="form-grid-3" style="margin-top:14px">
+          <div class="form-group">
+            <label for="a-transaction">Transaction <span style="color:var(--accent2)">*</span></label>
+            <select id="a-transaction">
+              <option value="">— Choisir —</option>
+              <option value="Location">Location</option>
+              <option value="Vente">Vente</option>
+              <option value="Saisonnier">Saisonnier</option>
+            </select>
+            <span class="field-error" id="a-transaction-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="a-region">Région <span style="color:var(--accent2)">*</span></label>
+            <select id="a-region">
+              <option value="">— Choisir —</option>
+              <option value="Auvergne-Rhône-Alpes">Auvergne-Rhône-Alpes</option>
+              <option value="Bretagne">Bretagne</option>
+              <option value="Hauts-de-France">Hauts-de-France</option>
+              <option value="Île-de-France">Île-de-France</option>
+              <option value="Normandie">Normandie</option>
+              <option value="Nouvelle-Aquitaine">Nouvelle-Aquitaine</option>
+              <option value="Occitanie">Occitanie</option>
+              <option value="Provence-Alpes-Côte d'Azur">Provence-Alpes-Côte d'Azur</option>
+            </select>
+            <span class="field-error" id="a-region-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="a-typeBien">Type de bien <span style="color:var(--accent2)">*</span></label>
+            <select id="a-typeBien">
+              <option value="">— Choisir —</option>
+              <option value="Appartement">Appartement</option>
+              <option value="Studio">Studio</option>
+              <option value="Maison">Maison</option>
+              <option value="Local commercial">Local commercial</option>
+              <option value="Terrain">Terrain</option>
+            </select>
+            <span class="field-error" id="a-typeBien-error"></span>
+          </div>
+        </div>
+        <div class="form-grid-3" style="margin-top:14px">
+          <div class="form-group">
+            <label for="a-ville">Ville <span style="color:var(--accent2)">*</span></label>
+            <input type="text" id="a-ville" placeholder="ex : Lyon"/>
+            <span class="field-error" id="a-ville-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="a-prix">Prix (€) <span style="color:var(--accent2)">*</span></label>
+            <input type="number" id="a-prix" placeholder="ex : 950" min="0"/>
+            <span class="field-error" id="a-prix-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="a-surface">Surface (m²)</label>
+            <input type="number" id="a-surface" placeholder="ex : 45" min="0"/>
+          </div>
+        </div>
+        <div class="form-grid-2" style="margin-top:14px">
+          <div class="form-group">
+            <label for="a-pieces">Nombre de pièces</label>
+            <input type="number" id="a-pieces" placeholder="ex : 3" min="0"/>
+          </div>
+          <div class="form-group">
+            <label for="a-adresse">Adresse</label>
+            <input type="text" id="a-adresse" placeholder="ex : 12 rue de la Paix, 75001 Paris"/>
+          </div>
+        </div>
+        <p class="form-section-title">Photos</p>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="a-image">Photo principale</label>
+            <input type="file" id="a-image" accept="image/*" style="color:var(--muted);cursor:pointer"/>
+          </div>
+          <div class="form-group">
+            <label for="a-images">Autres photos</label>
+            <input type="file" id="a-images" accept="image/*" multiple style="color:var(--muted);cursor:pointer"/>
+          </div>
+        </div>
+        <p class="form-section-title">Description</p>
+        <div class="form-group">
+          <label for="a-description">Description du bien</label>
+          <textarea id="a-description" placeholder="Décrivez le bien…" rows="4"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-success">✓ Valider l'annonce</button>
+          <button type="button" class="btn btn-ghost" id="btn-cancel-form">✕ Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div><!-- /vue-form -->
+
+  <!-- VUE : CONTACT -->
+  <div id="vue-contact" style="display:none">
+    <div style="margin-bottom:16px">
+      <button class="btn btn-ghost" id="btn-back-contact">← Retour à l'accueil</button>
+    </div>
+    <section class="section-block">
+      <h2 class="section-title">Contact</h2>
+      <form id="form-contact" novalidate style="max-width:560px">
+        <div class="form-group" style="margin-bottom:14px">
+          <label for="c-nom">Nom complet <span style="color:var(--accent2)">*</span></label>
+          <input type="text" id="c-nom" placeholder="Jean Dupont" autocomplete="name"/>
+          <span class="field-error" id="c-nom-error"></span>
+        </div>
+        <div class="form-group" style="margin-bottom:14px">
+          <label for="c-email">Email <span style="color:var(--accent2)">*</span></label>
+          <input type="email" id="c-email" placeholder="jean@exemple.fr" autocomplete="email"/>
+          <span class="field-error" id="c-email-error"></span>
+        </div>
+        <div class="form-group" style="margin-bottom:14px">
+          <label for="c-type">Type de demande <span style="color:var(--accent2)">*</span></label>
+          <select id="c-type">
+            <option value="">Sélectionnez…</option>
+            <option value="info">Demande d'information</option>
+            <option value="visite">Demande de visite</option>
+            <option value="achat">Proposition d'achat</option>
+            <option value="autre">Autre</option>
+          </select>
+          <span class="field-error" id="c-type-error"></span>
+        </div>
+        <div class="form-group" style="margin-bottom:20px">
+          <label for="c-message">Message <span style="color:var(--accent2)">*</span></label>
+          <textarea id="c-message" placeholder="Votre message…" rows="5"></textarea>
+          <span class="field-error" id="c-message-error"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">✉ Envoyer</button>
+      </form>
+    </section>
+  </div><!-- /vue-contact -->
+
+</main>
+
+<footer>ImmoFR © 2025 — Projet DAI · L2 STEE · UPPA</footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
