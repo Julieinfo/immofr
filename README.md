@@ -1,6 +1,6 @@
-# 🏠 ImmoFR — Immobilier en France
+# 🏠 ImmoFR - Immobilier en France
 
-> Plateforme web SPA de petites annonces immobilières — Projet académique L2 Informatique
+> Plateforme web SPA de petites annonces immobilières - Projet académique L2 Informatique
 
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
@@ -11,14 +11,14 @@
 
 ## 📖 Contexte
 
-Projet réalisé en binôme dans le cadre du cours de **Développement d'Applications Internet** (L2 STEE — UPPA, 2025-2026). L'objectif était de concevoir une application web **single-page** (SPA) de gestion d'annonces immobilières en HTML, CSS et JavaScript vanilla, sans framework.
+Projet réalisé en binôme dans le cadre du cours de **Développement d'Applications Internet** (L2 STEE - UPPA, 2025-2026). L'objectif était de concevoir une application web **single-page** (SPA) de gestion d'annonces immobilières en HTML5, CSS3 et JavaScript vanilla, sans framework.
 
 ---
 
 ## ✨ Fonctionnalités
 
 ### Recherche & Filtres
-- Filtre par type de transaction — Vente · Location · Saisonnier
+- Filtre par type de transaction - Vente · Location · Saisonnier
 - Filtre par région (8 régions françaises)
 - Filtre par type de bien (Appartement, Studio, Maison, Local commercial, Terrain)
 - Filtre par prix min / prix max
@@ -41,7 +41,7 @@ Projet réalisé en binôme dans le cadre du cours de **Développement d'Applica
 - Toutes les infos du bien (type, surface, pièces, adresse, description)
 - Bouton "← Retour aux résultats" (conserve la page courante)
 
-### CRUD — Ajout / Modification / Suppression
+### CRUD - Ajout / Modification / Suppression
 - Formulaire complet avec validation côté client (champs obligatoires en rouge)
 - Pré-remplissage en mode modification
 - Confirmation avant suppression
@@ -63,7 +63,7 @@ Projet réalisé en binôme dans le cadre du cours de **Développement d'Applica
 
 HTML5 · CSS3 · JavaScript vanilla
 
-> Aucune dépendance externe — projet 100% natif.
+> Aucune dépendance externe - projet 100% natif.
 
 ---
 
@@ -104,7 +104,7 @@ immofr/
 ## ⚠️ Limitations connues
 
 - Images uploadées via `<input type="file">` perdues au rechargement (blob URLs)
-- Favoris et annonces ajoutées en mémoire JS uniquement — extension possible via `localStorage`
+- Favoris et annonces ajoutées en mémoire JS uniquement - extension possible via `localStorage`
 - Pas de pagination des dots carrousel au-delà de 8 photos
 
 ---
@@ -122,6 +122,6 @@ Ouvre ensuite `index.html` dans ton navigateur. Aucune installation requise.
 
 ## 👩‍💻 Auteurs
 
-**Julie de Castro** & **[Prénom Nom du binôme]**  
-L2 STEE — UPPA · 2025-2026  
+**Julie de Castro**  
+L2 STEE - UPPA · 2025-2026  
 [GitHub Julie](https://github.com/julieinfo) · [Portfolio](https://julieinfo.github.io)
